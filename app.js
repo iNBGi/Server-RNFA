@@ -9,6 +9,7 @@ const { PrismaClient } = require('@prisma/client');
 const dotenv = require('dotenv');
 const session = require('express-session');
 const { check, validationResult } = require('express-validator');
+
 const prisma = new PrismaClient()
 app.use(express.json());
 dotenv.config(); // Load environment variables from .env file
@@ -20,7 +21,7 @@ const router = express.Router();
 
 // MongoDB connection
 
- const mongURI = "mongodb+srv://mbaberbano:123123123Dek@cbs.2zjmxrg.mongodb.net/test" 
+const mongURI = "mongodb+srv://mbaberbano:123123123Dek@cbs.2zjmxrg.mongodb.net/test" 
  
  mongoose.connect(mongURI, {
     useNewUrlParser : true
@@ -146,11 +147,34 @@ app.get('/recipesinformation', async (req, res) => {
 
 app.get('/recipes', async (req, res) => {
   try {
-    const recipes = await prisma.recipes.findMany(); // Replace 'recipe' with your actual Prisma model name
+    const recipes = await prisma.recipe.findMany(); 
 
    return res.status(200).send({ recipes });
   } catch (error) {
     console.error('Error fetching recipes:', error);
+    res.status(500).send({ error: 'Internal server error' });
+  }
+});
+
+app.get('/exerciseinformation', async (req, res) => {
+  try {
+    const exerciseinformations = await prisma.exerciseinformation.findMany(); 
+
+   return res.status(200).send({exerciseinformations});
+  } catch (error) {
+    console.error('Error fetching recipes:', error);
+    res.status(500).send({ error: 'Internal server error' });
+  }
+});
+
+
+app.get('/exercises', async (req, res) => {
+  try {
+    const exercises = await prisma.exercises.findMany(); 
+
+   return res.status(200).send({ exercises });
+  } catch (error) {
+    console.error('Error fetching exercises:', error);
     res.status(500).send({ error: 'Internal server error' });
   }
 });
