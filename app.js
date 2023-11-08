@@ -147,7 +147,7 @@ app.get('/recipesinformation', async (req, res) => {
 
 app.get('/recipes', async (req, res) => {
   try {
-    const recipes = await prisma.recipe.findMany(); 
+    const recipes = await prisma.recipe.findAll(); 
 
    return res.status(200).send({ recipes });
   } catch (error) {
@@ -158,7 +158,7 @@ app.get('/recipes', async (req, res) => {
 
 app.get('/exerciseinformation', async (req, res) => {
   try {
-    const exerciseinformations = await prisma.exerciseinformation.findMany(); 
+    const exerciseinformations = await prisma.exerciseinformation.findAll(); 
 
    return res.status(200).send({exerciseinformations});
   } catch (error) {
@@ -170,7 +170,7 @@ app.get('/exerciseinformation', async (req, res) => {
 
 app.get('/exercises', async (req, res) => {
   try {
-    const exercises = await prisma.exercises.findMany(); 
+    const exercises = await prisma.exercises.findAll(); 
 
    return res.status(200).send({ exercises });
   } catch (error) {
