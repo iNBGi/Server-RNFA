@@ -12,7 +12,6 @@ datasource db {
 }
 
 
-
 model User {
   id             String   @id @default(auto()) @map("_id") @db.ObjectId 
   firstname      String
@@ -35,5 +34,16 @@ model Recipeinformation {
   ingredients String
   steps String
   nutrition String
+}
 
+model Exercises {
+   id             String   @id @default(auto()) @map("_id") @db.ObjectId 
+  exercise      String
+  image           String
+}
+
+model Exerciseinformation {
+   id             String   @id @default(auto()) @map("_id") @db.ObjectId 
+  exercise      String
+  videolink     String
 }
