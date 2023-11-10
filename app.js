@@ -3,14 +3,10 @@ const express = require('express');
 const app = express();
 const bodyParser = require("body-parser")
 const mongoose = require('mongoose')
-require("./coach");
-const Coach = mongoose.model("coach")
 const { PrismaClient } = require('@prisma/client');
 const dotenv = require('dotenv');
 const session = require('express-session');
 const { check, validationResult } = require('express-validator');
-
-const prisma = new PrismaClient()
 app.use(express.json());
 dotenv.config(); // Load environment variables from .env file
 
@@ -25,8 +21,8 @@ const mongURI = "mongodb+srv://mbaberbano:123123123Dek@cbs.2zjmxrg.mongodb.net/t
  
  mongoose.connect(mongURI, {
     useNewUrlParser : true
-  
- })   
+
+ })
  
 mongoose.connection.on("connected",() =>{
     console.log("connect Success")
@@ -34,6 +30,7 @@ mongoose.connection.on("connected",() =>{
 mongoose.connection.on("error",(err) =>{
     console.log("error",err)
 })
+ 
 
 app.get('/', async (req, res) => {
     try {
@@ -61,25 +58,6 @@ app.use(function(err, req, res, next) {
     res.render('error1');
   });
 
-  app.post('/send-data', async (req, res) => {
-    try {
-      const { firstname, lastname } = req.body;
-      
-      // Create a new coach record using Prisma
-      const newCoach = await prisma.coach.create({
-        data: {
-          firstname,
-          lastname,
-        },
-      });
-  
-      console.log('New Coach Data:', newCoach);
-      res.send('Success');
-    } catch (err) {
-      console.error(err);
-      res.status(500).send('Internal server error');
-    }
-  });
 
   router.get('/register', async function(req, res, next) {
     navigation.navigate('Gymsc')
@@ -116,6 +94,7 @@ app.use(function(err, req, res, next) {
   return encryptedMessage;
 }
 
+
 app.get('/recipeinformation', async(req, res)=> {
   try{
     const {recipeId} = req.body;
@@ -147,7 +126,7 @@ app.get('/recipesinformation', async (req, res) => {
 
 app.get('/recipes', async (req, res) => {
   try {
-    const recipes = await prisma.recipes.findMany(); 
+    const recipes = await prisma.recipes.findMany(); // Replace 'recipe' with your actual Prisma model name
 
    return res.status(200).send({ recipes });
   } catch (error) {
@@ -158,7 +137,7 @@ app.get('/recipes', async (req, res) => {
 
 app.get('/exerciseinformation', async (req, res) => {
   try {
-    const exerciseinformations = await prisma.exerciseinformation.findMany(); 
+    const exerciseinformations = await prisma.exerciseinformation.findMany(); // Replace 'recipe' with your actual Prisma model name
 
    return res.status(200).send({exerciseinformations});
   } catch (error) {
@@ -170,7 +149,7 @@ app.get('/exerciseinformation', async (req, res) => {
 
 app.get('/exercises', async (req, res) => {
   try {
-    const exercises = await prisma.exercises.findMany(); 
+    const exercises = await prisma.exercises.findMany(); // Replace 'recipe' with your actual Prisma model name
 
    return res.status(200).send({ exercises });
   } catch (error) {
