@@ -7,13 +7,17 @@ const { PrismaClient } = require('@prisma/client');
 const dotenv = require('dotenv');
 const session = require('express-session');
 const { check, validationResult } = require('express-validator');
-const session = require('express-session');
-const prisma = new PrismaClient()
 app.use(express.json());
 dotenv.config(); // Load environment variables from .env file
+
+
 const router = express.Router();
+
+
+
 // MongoDB connection
- const mongURI = "mongodb+srv://mbaberbano:123123123Dek@cbs.2zjmxrg.mongodb.net/test" 
+
+const mongURI = "mongodb+srv://mbaberbano:123123123Dek@cbs.2zjmxrg.mongodb.net/test" 
  
  mongoose.connect(mongURI, {
     useNewUrlParser : true
@@ -26,6 +30,8 @@ mongoose.connection.on("connected",() =>{
 mongoose.connection.on("error",(err) =>{
     console.log("error",err)
 })
+ 
+
 app.get('/', async (req, res) => {
     try {
       await prisma.$connect();
@@ -41,6 +47,7 @@ app.get('/', async (req, res) => {
     console.log('Server is running on port 3000');
   });
   
+
 app.use(function(err, req, res, next) {
     // set locals, only providing error in development
     res.locals.message = err.message;
@@ -51,28 +58,12 @@ app.use(function(err, req, res, next) {
     res.render('error1');
   });
 
-  app.post('/send-data', async (req, res) => {
-    try {
-      const { firstname, lastname } = req.body;
-      
-      // Create a new coach record using Prisma
-      const newCoach = await prisma.coach.create({
-        data: {
-          firstname,
-          lastname,
-        },
-      });
-  
-      console.log('New Coach Data:', newCoach);
-      res.send('Success');
-    } catch (err) {
-      console.error(err);
-      res.status(500).send('Internal server error');
-    }
-  });
+
   router.get('/register', async function(req, res, next) {
     navigation.navigate('Gymsc')
   });
+
+
   const decryptPassword = (message, key) =>{
     let decryptedMessage = "";
     for (let i = 0; i < message.length; i++) {
@@ -87,6 +78,7 @@ app.use(function(err, req, res, next) {
     }
     return decryptedMessage;
   }
+
   const encryptPassword = (message, key)=> {
   let encryptedMessage = "";
   for (let i = 0; i < message.length; i++) {
@@ -101,6 +93,7 @@ app.use(function(err, req, res, next) {
   }
   return encryptedMessage;
 }
+
 
 app.get('/recipeinformation', async(req, res)=> {
   try{
@@ -119,15 +112,18 @@ return res.status(200).send({recipeinformation});
     res.status(500).send({ error: 'Internal server error' });
   }
 });
+
 app.get('/recipesinformation', async (req, res) => {
   try {
     const recipeinformations = await prisma.Recipeinformation.findMany(); // Replace 'recipe' with your actual Prisma model name
+
    return res.status(200).send({recipeinformations});
   } catch (error) {
     console.error('Error fetching recipes:', error);
     res.status(500).send({ error: 'Internal server error' });
   }
 });
+
 app.get('/recipes', async (req, res) => {
   try {
     const recipes = await prisma.recipes.findMany(); // Replace 'recipe' with your actual Prisma model name
@@ -216,6 +212,7 @@ app.get('/exercises', async (req, res) => {
         });
       } else {
         // Successful login
+
         const userId = user.id;
         const token = await JWT.sign({_id: user._id}, process.env.JWT_SECRET,{
           expiresIn:'7d'
@@ -238,6 +235,7 @@ app.get('/exercises', async (req, res) => {
       return res.status(500).json({ errorMessage: 'Something went wrong.' });
     }
   });
+
   app.post('/registering', [
     check('firstname').isLength({ min: 1 }).withMessage('First name is required'),
     check('lastname').isLength({ min: 1 }).withMessage('Last name is required'),
