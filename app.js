@@ -5,7 +5,6 @@ const bodyParser = require("body-parser")
 const mongoose = require('mongoose')
 const { PrismaClient } = require('@prisma/client');
 const dotenv = require('dotenv');
-const session = require('express-session');
 const { check, validationResult } = require('express-validator');
 app.use(express.json());
 dotenv.config(); // Load environment variables from .env file
