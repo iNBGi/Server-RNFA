@@ -5,7 +5,6 @@ const bodyParser = require("body-parser")
 const mongoose = require('mongoose')
 const { PrismaClient } = require('@prisma/client');
 const dotenv = require('dotenv');
-const session = require('express-session');
 const { check, validationResult } = require('express-validator');
 const session = require('express-session');
 const prisma = new PrismaClient()
